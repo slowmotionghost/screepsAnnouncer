@@ -4,7 +4,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const dot = require('dot-object')
 const SockJS = require('sockjs-client')
 const socks = [new SockJS('https://screeps.com/socket/'),new SockJS('https://screeps.com/season/socket/')]
-const typesOfAnnouncement = ['announcement','report']
+const typesOfAnnouncement = ['announcement','report','defence alert']
 const messageInterval = 1
 client.login(process.env["DISCORD_BOT_TOKEN"]).then(socks.forEach((sock)=>runSocket(sock)))
 
@@ -27,7 +27,7 @@ function runSocket(sock){
 					for (let i in logs){
 						let log = logs[i]
 						if (log){
-							let split = log.split(' ')
+							let split = log.split('/')
 							for (let t in typesOfAnnouncement){
 								if (split && split[0] == typesOfAnnouncement[t]){
 									writeAnnouncement(split,typesOfAnnouncement[t])
@@ -43,7 +43,9 @@ function runSocket(sock){
 function writeAnnouncement(data,type){
 	if (data && Array.isArray(data) && data.length === 3){
 		//announcement,shard,message
-		let message = `\` ${type} from ${data[1]}: ${data[2]} \``
+		let dataSection = data.slice(2)
+		let dataStr = dataSection.join()
+		let message = `\` ${type} from ${data[1]}: ${dataStr} \``
 		sendMessage(message,type)
 	}
 }
