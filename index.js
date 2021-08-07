@@ -4,7 +4,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const dot = require('dot-object')
 const SockJS = require('sockjs-client')
 const socks = [new SockJS('https://screeps.com/socket/'),new SockJS('https://screeps.com/season/socket/')]
-const typesOfAnnouncement = ['announcements']
+const typesOfAnnouncement = ['announcement','report']
 const messageInterval = 1
 client.login(process.env["DISCORD_BOT_TOKEN"]).then(socks.forEach((sock)=>runSocket(sock)))
 
@@ -28,8 +28,10 @@ function runSocket(sock){
 						let log = logs[i]
 						if (log){
 							let split = log.split(' ')
-							if (split && split[0] == 'announcement'){
-								writeAnnouncement(split)
+							for (let t in typesOfAnnouncement){
+								if (split && split[0] == typesOfAnnouncement[t]){
+									writeAnnouncement(split,typesOfAnnouncement[t])
+								}
 							}
 						}
 					}
@@ -38,18 +40,16 @@ function runSocket(sock){
 		}
 	};
 }
-function writeAnnouncement(data){
+function writeAnnouncement(data,type){
 	if (data && Array.isArray(data) && data.length === 3){
 		//announcement,shard,message
-		let message = `\` ANNOUNCEMENT from ${data[1]}: ${data[2]} \``
-		sendMessage(message,0)
+		let message = `\` ${type} from ${data[1]}: ${data[2]} \``
+		sendMessage(message,type)
 	}
 }
 async function sendMessage(toSendText,type){
 	let guilds = await client.guilds.fetch();
-	if (!typesOfAnnouncement[type]){
-		return
-	}
+	let channelName = type+'s'
 	guilds.each(guild => processGuild(guild.id))
 	async function processGuild(guildid){
 		let guild = await client.guilds.fetch(guildid)
@@ -62,9 +62,9 @@ async function sendMessage(toSendText,type){
 		}
 		//ensure this type of channel exists
 		let channels = await guild.channels.fetch();
-		let channel = channels.find((c)=>c.name === typesOfAnnouncement[type])
+		let channel = channels.find((c)=>c.name === channelName)
 		if (!channel){
-			channel = await guild.channels.create(typesOfAnnouncement[type])
+			channel = await guild.channels.create(channelName)
 			console.log('creating channel')
 		}
 		if (!channel){
