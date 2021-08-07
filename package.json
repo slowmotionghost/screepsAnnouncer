@@ -1,0 +1,29 @@
+{
+  "name": "screepsannouncer",
+  "version": "1.0.0",
+  "description": "this package pulls from screeps console and feeds the announcements to discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slowmotionghost/screepsAnnouncer.git"
+  },
+  "keywords": [
+    "screeps",
+    "discord"
+  ],
+  "author": "slowmotionghost",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slowmotionghost/screepsAnnouncer/issues"
+  },
+  "homepage": "https://github.com/slowmotionghost/screepsAnnouncer#readme",
+  "dependencies": {
+    "discord.js": "^13.0.1",
+    "dot-object": "^2.1.4",
+    "dotenv": "^10.0.0",
+    "sockjs-client": "^1.5.1"
+  }
+}

@@ -1,0 +1,6 @@
+# .gitignore
+.env
+key.json
+.idea
+# Project exclude paths
+/node_modules/
