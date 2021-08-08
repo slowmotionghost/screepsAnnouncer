@@ -4,16 +4,19 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const dot = require('dot-object')
 const SockJS = require('sockjs-client')
 const socks = [new SockJS('https://screeps.com/socket/'),new SockJS('https://screeps.com/season/socket/')]
+//change the type of annoncement here, these key words will trigger from the console in screeps
 const typesOfAnnouncement = ['announcement','report','defence alert']
 const messageInterval = 1
 client.login(process.env.DISCORD_BOT_TOKEN).then(socks.forEach((sock)=>runSocket(sock)))
 function runSocket(sock){
 	sock.onopen = function() {
+		//connecting to screeps websocket
 		console.log('open');
 		console.log('authorising, token:',process.env.SCREEPS_TOKEN != undefined)
 		sock.send('auth '+process.env.SCREEPS_TOKEN)
 	};
 	sock.onmessage = function(e) {
+		//listening to screeps console
 		if (e.data){
 			let split = e.data.split(' ')
 			if (split[0] == 'auth' && split[1] == 'ok'){
@@ -41,7 +44,7 @@ function runSocket(sock){
 }
 function writeAnnouncement(data,type){
 	if (data && Array.isArray(data) && data.length === 3){
-		//announcement,shard,message
+		//each console log should be in the format announcementType/Game.shard.name/message
 		let dataSection = data.slice(2)
 		let dataStr = dataSection.join()
 		let message = `\` ${type} from ${data[1]}: ${dataStr} \``
@@ -49,6 +52,7 @@ function writeAnnouncement(data,type){
 	}
 }
 async function sendMessage(toSendText,type){
+	//send the message to discord on a specific channel for that announcement type
 	let guilds = await client.guilds.fetch();
 	let channelName = type+'s'
 	let split = channelName.split(' ')
