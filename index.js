@@ -81,6 +81,7 @@ async function sendMessage(toSendText,type){
 				let time = Date.now()
 				let difference = time - message.createdTimestamp
 				let hours = difference/3600000
+				//to prevent spam - only sends a duplicate message after x hours
 				if (hours < 3){
 					canPost = false
 				}
