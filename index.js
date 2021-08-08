@@ -51,6 +51,11 @@ function writeAnnouncement(data,type){
 async function sendMessage(toSendText,type){
 	let guilds = await client.guilds.fetch();
 	let channelName = type+'s'
+	let split = channelName.split(' ')
+	if (split.length>0){
+		//channel names can't have spaces -> convert to hyphens
+		channelName = split.join('-')
+	}
 	guilds.each(guild => processGuild(guild.id))
 	async function processGuild(guildid){
 		let guild = await client.guilds.fetch(guildid)
