@@ -70,8 +70,8 @@ async function sendMessage(toSendText,type){
 		let channels = await guild.channels.fetch();
 		let channel = channels.find((c)=>c.name === channelName)
 		if (!channel){
-			channel = await guild.channels.create(channelName)
-			console.log('creating channel')
+			//channel = await guild.channels.create(channelName)
+			console.log('creating channel',channelName)
 		}
 		if (!channel){
 			return
