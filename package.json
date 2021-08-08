@@ -2,6 +2,9 @@
   "name": "screepsannouncer",
   "version": "1.0.0",
   "description": "this package pulls from screeps console and feeds the announcements to discord",
+  "engines": {
+    "node": "16.6"
+  },
   "main": "index.js",
   "scripts": {
     "test": "test",
@@ -27,4 +30,4 @@
     "dotenv": "^10.0.0",
     "sockjs-client": "^1.5.1"
   }
-}
+},
