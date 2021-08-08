@@ -3,7 +3,7 @@ SCREEPS ANNOUNCER
 This node application will listen to the Screeps World console for a user, and stream custom information over to a discord bot. It is set up in a way that it can be run on a heroku server.
 
 Set-up:
-1) Head over to the discord developer portal, create a new application. Customize you bot in the bot tab, and copy the token to use later.
+1) Head over to the discord developer portal, create a new application. Customize your bot in the bot tab, and copy the token to use later.
 2) Switch over to your Screeps account, click on manage account, then on auth tokens. The only endpoint that should be needed is WebSockets (console) although I have only tested with a full access token. Save this token for later.
 3) Find out your Screeps user number (not your username or email). The only way I could find to do this is log in to screeps on a browser and use the developer tools to check for it being sent in the requests.
 4) Customise any announcement types you want - each one will show in its own channel
