@@ -6,6 +6,7 @@ const SockJS = require('sockjs-client')
 const socks = [new SockJS('https://screeps.com/socket/'),new SockJS('https://screeps.com/season/socket/')]
 const typesOfAnnouncement = ['announcement','report','defence alert']
 const messageInterval = 1
+run()
 async function run(){
 	await client.login(process.env.DISCORD_BOT_TOKEN)
 	socks.forEach((sock)=>runSocket(sock))
