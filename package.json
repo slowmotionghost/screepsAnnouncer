@@ -4,7 +4,8 @@
   "description": "this package pulls from screeps console and feeds the announcements to discord",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
