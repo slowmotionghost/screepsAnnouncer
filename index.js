@@ -96,7 +96,10 @@ async function sendMessage(toSendText,type){
 			}
 		})
 		if (canPost){
+			console.log(`posting ${toSendText}`)
 			channel.send(toSendText)
+		} else {
+			console.log(`duplicate ${toSendText}`)
 		}
 	}
 }
