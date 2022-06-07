@@ -2,5 +2,6 @@
 .env
 key.json
 .idea
+/.idea
 # Project exclude paths
 /node_modules/
