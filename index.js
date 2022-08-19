@@ -3,24 +3,49 @@ const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const dot = require('dot-object')
 const SockJS = require('sockjs-client')
+const axios = require('axios')
 const socks = [new SockJS('https://screeps.com/socket/'),new SockJS('https://screeps.com/season/socket/')]
+const baseUrl = 'https://screeps.com'
 //change the type of annoncement here, these key words will trigger from the console in screeps
 const typesOfAnnouncement = ['announcement','report','defence alert']
+let user = process.env.SCREEPS_USER
+let userId = undefined
+let screepsToken = process.env.SCREEPS_TOKEN
 const messageInterval = 1
-client.login(process.env.DISCORD_BOT_TOKEN).then(socks.forEach((sock)=>runSocket(sock)))
-function runSocket(sock){
+main()
+async function main(){
+		await getUserId()
+		if (userId){
+				client.login(process.env.DISCORD_BOT_TOKEN).then(socks.forEach((sock)=>runSocket(sock)))
+		}
+}
+async function getUserId(){
+		let url = `${baseUrl}/api/auth/me`
+		await axios.get(url,
+				{headers:{
+								'X-Token': screepsToken,
+								'X-Username': user
+						}}
+		).then((res)=> {
+						if (res.data && res.data._id){
+								userId = res.data._id
+						}
+				}
+		)
+}
+async function runSocket(sock){
 	sock.onopen = function() {
 		//connecting to screeps websocket
 		console.log('open');
-		console.log('authorising, token:',process.env.SCREEPS_TOKEN != undefined)
-		sock.send('auth '+process.env.SCREEPS_TOKEN)
+		console.log('authorising, token:',screepsToken != undefined)
+		sock.send('auth '+screepsToken)
 	};
 	sock.onmessage = function(e) {
 		//listening to screeps console
 		if (e.data){
 			let split = e.data.split(' ')
 			if (split[0] == 'auth' && split[1] == 'ok'){
-				sock.send(`subscribe user:${process.env.USER}/console`)
+				sock.send(`subscribe user:${userId}/console`)
 			}
 			if (e.data[0]=='['){
 				let obj = JSON.parse(e.data)
