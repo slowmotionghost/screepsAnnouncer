@@ -73,7 +73,7 @@ function writeAnnouncement(data,type){
 		let dataSection = data.slice(2)
 		let dataStr = dataSection.join()
 		let message = `\` ${type} from ${data[1]}: ${dataStr} \``
-			console.log('message')
+			console.log(message)
 		sendMessage(message,type)
 	}
 }
