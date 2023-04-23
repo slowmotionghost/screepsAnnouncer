@@ -76,7 +76,7 @@ function writeAnnouncement(data,type){
 			console.log(message)
 		sendMessage(message,type)
 	} else {
-			console.log(JSON.stringify(data))
+			console.log('bad data',JSON.stringify(data))
 	}
 }
 async function sendMessage(toSendText,type){
