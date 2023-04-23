@@ -92,6 +92,7 @@ async function sendMessage(toSendText,type){
 	async function processGuild(guildid){
 		let guild = await client.guilds.fetch(guildid)
 		if (!guild){
+				console.log('no guild',guildid)
 			return
 		}
 		if (!guild.available){
