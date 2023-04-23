@@ -56,8 +56,8 @@ async function runSocket(sock){
 						if (log){
 							let split = log.split('/')
 							for (let t in typesOfAnnouncement){
-									console.log(split[0])
 								if (split && split[0] == typesOfAnnouncement[t]){
+										console.log(split[1])
 									writeAnnouncement(split,typesOfAnnouncement[t])
 								}
 							}
