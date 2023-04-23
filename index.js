@@ -57,7 +57,6 @@ async function runSocket(sock){
 							let split = log.split('/')
 							for (let t in typesOfAnnouncement){
 								if (split && split[0] == typesOfAnnouncement[t]){
-										console.log(split[1])
 									writeAnnouncement(split,typesOfAnnouncement[t])
 								}
 							}
@@ -76,6 +75,8 @@ function writeAnnouncement(data,type){
 		let message = `\` ${type} from ${data[1]}: ${dataStr} \``
 			console.log(message)
 		sendMessage(message,type)
+	} else {
+			console.log(JSON.stringify(data))
 	}
 }
 async function sendMessage(toSendText,type){
