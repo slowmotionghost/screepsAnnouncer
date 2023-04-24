@@ -7,7 +7,7 @@ const axios = require('axios')
 const socks = [new SockJS('https://screeps.com/socket/'),new SockJS('https://screeps.com/season/socket/')]
 const baseUrl = 'https://screeps.com'
 //change the type of annoncement here, these key words will trigger from the console in screeps
-const typesOfAnnouncement = ['announcement','report','transfer','defence alert']
+const typesOfAnnouncement = ['announcement','report','transfer','defence alert','local transfer','local away transfer']
 let user = process.env.SCREEPS_USER
 let userId = undefined
 let screepsToken = process.env.SCREEPS_TOKEN
