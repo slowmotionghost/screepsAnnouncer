@@ -8,5 +8,5 @@ Set-up:
 3) Customise any announcement types you want - each one will show in its own channel
 4) Create a .env file in a similar format to the example (remove the //) and put in the data found in the earlier steps
 5) Run npm install if you haven't already (not needed if you are deploying to heroku)
-6) In your screeps code base, add logs in the following format: `console.log(announcementType/shard name/desired message)`
-The command should be a single string, include the / between each section as this is used to split the input.
+6) In your screeps code base, add logs in the following format: `console.log(announcementType|shard name|desired message)`
+The command should be a single string, include the | between each section as this is used to split the input.
