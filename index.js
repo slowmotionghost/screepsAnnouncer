@@ -39,7 +39,7 @@ async function runSocket(sock){
 		console.log('open');
 		console.log('authorising, token:',screepsToken != undefined)
 		sock.send('auth '+screepsToken)
-			sendMessage(`connected ${this}`,'socket')
+			sendMessage(`connected ${this.url}`,'socket')
 	};
 	sock.onmessage = function(e) {
 		//listening to screeps console
@@ -69,7 +69,7 @@ async function runSocket(sock){
 	};
 		sock.onClose = function() {
 				//connecting to screeps websocket
-				sendMessage(`disconnected ${this}`,'socket')
+				sendMessage(`disconnected ${this.url}`,'socket')
 		};
 }
 function writeAnnouncement(data,type){
