@@ -7,7 +7,7 @@ const axios = require('axios')
 const socks = [new SockJS('https://screeps.com/socket/'),new SockJS('https://screeps.com/season/socket/')]
 const baseUrl = 'https://screeps.com'
 //change the type of annoncement here, these key words will trigger from the console in screeps
-const typesOfAnnouncement = ['announcement','report','transfer','defence alert','local transfer','local away transfer']
+const typesOfAnnouncement = ['announcement','report','transfer','defence alert','local transfer','local away transfer','socket']
 let user = process.env.SCREEPS_USER
 let userId = undefined
 let screepsToken = process.env.SCREEPS_TOKEN
@@ -39,6 +39,7 @@ async function runSocket(sock){
 		console.log('open');
 		console.log('authorising, token:',screepsToken != undefined)
 		sock.send('auth '+screepsToken)
+			sendMessage(`connected ${this}`,'socket')
 	};
 	sock.onmessage = function(e) {
 		//listening to screeps console
@@ -66,6 +67,10 @@ async function runSocket(sock){
 			}
 		}
 	};
+		sock.onClose = function() {
+				//connecting to screeps websocket
+				sendMessage(`disconnected ${this}`,'socket')
+		};
 }
 function writeAnnouncement(data,type){
 	if (data && Array.isArray(data) && data.length === 3){
