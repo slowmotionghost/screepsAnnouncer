@@ -67,6 +67,9 @@ async function runSocket(sock){
 			}
 		}
 	};
+		sock.onError =  function(err) {
+				sendMessage(`error ${this.url} ${err}`,'socket')
+		};
 		sock.onClose = function() {
 				//connecting to screeps websocket
 				sendMessage(`disconnected ${this.url}`,'socket')
