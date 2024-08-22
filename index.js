@@ -34,12 +34,24 @@ async function getUserId(){
 		)
 }
 async function runSocket(sock){
+		let inactivityTimeout;
+		const INACTIVITY_LIMIT = 60000; // Set the inactivity timeout limit (e.g., 60 seconds)
+
+		function resetInactivityTimeout() {
+				console.log('setting inactivity timeout')
+				clearTimeout(inactivityTimeout);
+				inactivityTimeout = setTimeout(() => {
+						console.log('Inactivity detected. Closing and restarting socket.');
+						sock.close(); // Close the socket
+				}, INACTIVITY_LIMIT);
+		}
 	sock.onopen = function() {
 		//connecting to screeps websocket
 		console.log('open');
 		console.log('authorising, token:',screepsToken != undefined)
 		sock.send('auth '+screepsToken)
 			sendMessage(`connected ${this.url}`,'socket')
+			resetInactivityTimeout()
 	};
 	sock.onmessage = function(e) {
 		//listening to screeps console
@@ -65,6 +77,7 @@ async function runSocket(sock){
 					}
 				}
 			}
+			resetInactivityTimeout()
 		}
 	};
 		sock.onError =  function(err) {
@@ -72,7 +85,9 @@ async function runSocket(sock){
 		};
 		sock.onClose = function() {
 				//connecting to screeps websocket
+				clearTimeout(inactivityTimeout);
 				sendMessage(`disconnected ${this.url}`,'socket')
+				setTimeout(() => runSocket(sock), 2000);
 		};
 }
 function writeAnnouncement(data,type){
