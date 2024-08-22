@@ -38,7 +38,6 @@ async function runSocket(sock){
 		const INACTIVITY_LIMIT = 60000; // Set the inactivity timeout limit (e.g., 60 seconds)
 
 		function resetInactivityTimeout() {
-				console.log('setting inactivity timeout')
 				clearTimeout(inactivityTimeout);
 				inactivityTimeout = setTimeout(() => {
 						console.log('Inactivity detected. Closing and restarting socket.');
@@ -76,8 +75,8 @@ async function runSocket(sock){
 						}
 					}
 				}
+				resetInactivityTimeout()
 			}
-			resetInactivityTimeout()
 		}
 	};
 		sock.onError =  function(err) {
