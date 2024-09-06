@@ -40,6 +40,7 @@ async function runSocket(sock){
 		function resetInactivityTimeout() {
 				clearTimeout(inactivityTimeout);
 				inactivityTimeout = setTimeout(() => {
+						sendMessage(`inactivity detected, attempting restart ${this.url}`,'socket')
 						console.log('Inactivity detected. Closing and restarting socket.');
 						sock.close(); // Close the socket
 				}, INACTIVITY_LIMIT);
@@ -96,7 +97,7 @@ function writeAnnouncement(data,type){
 		let dataStr = dataSection.join()
 		let message = `\` ${type} from ${data[1]}: ${dataStr} \``
 			console.log('log',message)
-		sendMessage(message,type)
+			sendMessage(message,type)
 	} else {
 			console.log('bad data',JSON.stringify(data))
 	}
